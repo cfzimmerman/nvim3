@@ -781,6 +781,11 @@ do
     vim.lsp.config(name, server)
     vim.lsp.enable(name)
   end
+
+  -- Mason doesn't have prebuilt binaries for Helios.
+  if vim.uv.os_uname().sysname == 'SunOS' then
+    ensure_installed = {}
+  end
 end
 
 -- ============================================================
