@@ -699,7 +699,18 @@ do
   -- independently from neovim.
   ---@type table<string, vim.lsp.Config>
   local servers = {
-    rust_analyzer = {},
+    rust_analyzer = {
+      settings = {
+        ['rust-analyzer'] = {
+          check = {
+            command = 'clippy',
+          },
+          cargo = {
+            features = { 'softnpu' },
+          },
+        },
+      },
+    },
     emmylua_ls = {},
   }
 
