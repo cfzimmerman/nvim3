@@ -254,6 +254,8 @@ do
     group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
     callback = function() vim.hl.on_yank() end,
   })
+
+  vim.api.nvim_create_user_command('Path', function() vim.fn.setreg('+', vim.fn.expand '%:p') end, {})
 end
 
 -- ============================================================
@@ -707,7 +709,8 @@ do
             command = 'clippy',
           },
           cargo = {
-            features = { 'softnpu' },
+            -- features = { 'softnpu' },
+            features = { 'tofino_asic' },
           },
         },
       },
