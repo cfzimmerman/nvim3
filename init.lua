@@ -237,6 +237,9 @@ do
   vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
   vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
+  vim.keymap.set('n', '<leader>k', ':m .-2<CR>==', { desc = 'Move line up' })
+  vim.keymap.set('n', '<leader>j', ':m .+1<CR>==', { desc = 'Move line down' })
+
   -- NOTE: Some terminals have colliding keymaps or are not able to send distinct keycodes
   -- vim.keymap.set("n", "<C-S-h>", "<C-w>H", { desc = "Move window to the left" })
   -- vim.keymap.set("n", "<C-S-l>", "<C-w>L", { desc = "Move window to the right" })
@@ -256,6 +259,8 @@ do
   })
 
   vim.api.nvim_create_user_command('Path', function() vim.fn.setreg('+', vim.fn.expand '%:p') end, {})
+
+  vim.api.nvim_create_user_command('Blame', function() require('gitsigns').toggle_current_line_blame() end, {})
 end
 
 -- ============================================================
@@ -710,8 +715,10 @@ do
             command = 'clippy',
           },
           cargo = {
-            -- features = { 'softnpu' },
-            features = { 'tofino_asic' },
+            -- features = { 'softnpu', 'multicast' },
+            features = { 'tofino_asic', 'multicast' },
+            -- features = { 'tofino_stub', 'multicast' },
+            -- features = { 'chaos', 'multicast' },
           },
         },
       },
