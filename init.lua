@@ -713,6 +713,7 @@ do
         ['rust-analyzer'] = {
           check = {
             command = 'clippy',
+            extraArgs = { '--all-targets' },
           },
           cargo = {
             -- features = { 'softnpu', 'multicast' },
