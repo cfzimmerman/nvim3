@@ -706,23 +706,33 @@ do
   --  See `:help lsp-config` for information about keys and how to configure
   -- On Helios, ensure these are built and installed
   -- independently from neovim.
+  local rust_features_by_root = {
+    -- dendrite = { 'tofino_asic', 'multicast' },
+    dendrite = { 'chaos', 'multicast' },
+  }
+
   ---@type table<string, vim.lsp.Config>
   local servers = {
     rust_analyzer = {
+      cmd = function(dispatchers, config)
+        return vim.lsp.rpc.start({ 'rust-analyzer' }, dispatchers, {
+          cwd = config.root_dir,
+          env = config.cmd_env,
+          detached = config.detached,
+        })
+      end,
       settings = {
         ['rust-analyzer'] = {
           check = {
             command = 'clippy',
-            extraArgs = { '--all-targets' },
-          },
-          cargo = {
-            -- features = { 'softnpu', 'multicast' },
-            features = { 'tofino_asic', 'multicast' },
-            -- features = { 'tofino_stub', 'multicast' },
-            -- features = { 'chaos', 'multicast' },
           },
         },
       },
+      before_init = function(params, config)
+        local root = config.root_dir or params.rootPath or ''
+        local features = rust_features_by_root[vim.fs.basename(root)] or {}
+        config.settings['rust-analyzer'].cargo = { features = features }
+      end,
     },
     emmylua_ls = {},
   }
