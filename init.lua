@@ -462,6 +462,9 @@ do
       DiffviewOpen = { '--imply-local' },
     },
   }
+
+  vim.api.nvim_create_user_command('Do', function(opts) vim.cmd.DiffviewOpen(opts.fargs) end, { nargs = '*' })
+  vim.api.nvim_create_user_command('Dc', function() vim.cmd.DiffviewClose() end, {})
 end
 
 -- ============================================================
