@@ -386,6 +386,10 @@ do
     },
   }
 
+  vim.pack.add {
+    { src = 'https://github.com/nvim-tree/nvim-web-devicons' },
+  }
+
   -- [[ Colorscheme ]]
   -- You can easily change to a different colorscheme.
   -- Change the name of the colorscheme plugin below, and then
