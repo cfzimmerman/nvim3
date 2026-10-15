@@ -522,6 +522,14 @@ do
     --   },
     -- },
     -- pickers = {}
+    defaults = {
+      preview = {
+        -- Telescope sniffs binaries with `file --mime-type`, which illumos
+        -- `file` rejects; its usage text goes straight to the tty and
+        -- garbles the picker on every keystroke.
+        check_mime_type = vim.uv.os_uname().sysname ~= 'SunOS',
+      },
+    },
     extensions = {
       ['ui-select'] = { require('telescope.themes').get_dropdown() }
     }
