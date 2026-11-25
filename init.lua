@@ -711,8 +711,9 @@ do
   -- independently from neovim.
   local rust_features_by_root = {
     -- dendrite = { 'tofino_asic', 'multicast' },
-    -- dendrite = { 'chaos', 'multicast' }
-    dendrite = { 'tofino_asic' },
+    -- dendrite = { 'chaos', 'multicast', 'test-utils' },
+    dendrite = { 'tofino_stub', 'multicast' },
+    -- dendrite = { 'tofino_asic' },
   }
 
   ---@type table<string, vim.lsp.Config>
@@ -801,7 +802,13 @@ do
   -- NOTE: You can also specify plugin using a version range for its git tag.
   --  See `:help vim.version.range()` for more info
   vim.pack.add { { src = gh 'L3MON4D3/LuaSnip', version = vim.version.range '2.*' } }
-  require('luasnip').setup {}
+  require('luasnip').setup {
+    -- Leave a snippet once the cursor moves out of it (or its text is deleted).
+    -- Otherwise <Tab> (blink snippet_forward) jumps back to a stale tabstop
+    -- from any earlier, unfinished LSP snippet, anywhere in the buffer.
+    region_check_events = 'CursorMoved,CursorMovedI',
+    delete_check_events = 'TextChanged',
+  }
 
   -- `friendly-snippets` contains a variety of premade snippets.
   --    See the README about individual language/framework/plugin snippets:
